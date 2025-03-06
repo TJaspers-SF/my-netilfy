@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Netlify example: Serverless functions</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+<div class="container">
+    <h1>Example: About</h1>
+    <p>
+        ABOUT PAGE
+    </p>
+    <p>
+        A hello world example of using Netlify Functions to add serverless functions to your project.
+    </p>
+    <p>
+        To add Netlify Functions, create a JavaScript, TypeScript, or Go function to your project in a <code>netlify/functions</code> directory. You can customize the address for your functions using Netlify's Redirects API
+    </p>
+    <h2>Examples</h2>
+    <ul>
+        <li><a href="/.netlify/functions/hello?name=you">Hello World</a> ( /.netlify/functions/hello?name=you )</li>
+        <li><a href="/api/hello?name=you">Hello World</a> ( /api/hello?name=you )</li>
+    </ul>
+
+
+    <h2>More information</h2>
+    <ul>
+        <li><a href="https://www.netlify.com/products/functions/?utm_campaign=dx-examples&utm_source=example-site&utm_medium=web&utm_content=example-hello-functions">About Netlify Functions</a></li>
+        <li><a href="https://docs.netlify.com/functions/overview/?utm_campaign=dx-examples&utm_source=example-site&utm_medium=web&utm_content=example-hello-functions">Docs: Netlify Functions</a></li>
+        <li><a href="https://docs.netlify.com/functions/logs/?utm_campaign=dx-examples&utm_source=example-site&utm_medium=web&utm_content=example-hello-functions">Accessing your function logs</a></li>
+        <li><a href="https://functions.netlify.com/?utm_campaign=dx-examples&utm_source=example-site&utm_medium=web&utm_content=example-hello-functions">Learn serverless in the functions playground</a></li>
+    </ul>
+
+    <h2>Deploy your own</h2>
+    <p>
+        A great place to start is to clone and deploy your own copy of this example. You can do that by clicking the button below.
+    </p>
+    <p>
+        Try it! 👉
+        <a href="https://app.netlify.com/start/deploy?repository=https://github.com/netlify/example-hello-world-functions&utm_campaign=dx-examples"><img src="https://www.netlify.com/img/deploy/button.svg" class="dtn" alt="Deploy to Netlify"></a>
+    </p>
+
+    <p><small>Clicking the button will clone <a href="https://github.com/netlify/example-hello-world-functions">this repo</a> and deploy it as a new site on <a href="https://netlify.com/?utm_campaign=dx-examples">Netlify</a></small></p>
+
+    <script type='text/javascript'>
+        if (checkIfChatSessionIsCreated() || showChatBasedOnTaxonomy()) {
+            loadScript();
+        }
+
+        //Function u can call to load a script whenever u want.
+        function loadScript() {
+            let script = document.createElement('script');
+            script.src = 'https://omnichanneliv--gat2.sandbox.my.site.com/ESWGemeenteAmsterdamMessa1732548814564/assets/js/bootstrap.min.js';
+
+            // monitor script loading
+            // IE < 7, does not support onload
+            script.onreadystatechange = function () {
+                if (script.readyState === "loaded" || script.readyState === "complete") {
+                    //no need to reload the script
+                    script.onreadystatechange = null;
+                    initEmbeddedMessaging();
+                }
+            };
+
+            // other browsers
+            script.onload = function () {
+                initEmbeddedMessaging();
+            };
+
+            // append and execute script
+            document.documentElement.firstChild.appendChild(script);
+        }
+
+        function initEmbeddedMessaging() {
+            try {
+                embeddedservice_bootstrap.settings.language = 'nl-NL'; // For example, enter 'en' or 'en-US'
+
+                embeddedservice_bootstrap.init(
+                    '00DMU0000008hP9',
+                    'GemeenteAmsterdamMessagingWeb',
+                    'https://omnichanneliv--gat2.sandbox.my.site.com/ESWGemeenteAmsterdamMessa1732548814564',
+                    {
+                        scrt2URL: 'https://omnichanneliv--gat2.sandbox.my.salesforce-scrt.com'
+                    }
+                );
+            } catch (err) {
+                console.error('Error loading Embedded Messaging: ', err);
+            }
+        };
+
+        function checkIfChatSessionIsCreated() {
+            const orgId = '00DMU0000008hP9';
+            const storageItemSuffix = '_WEB_STORAGE';
+            const storageItem = localStorage.getItem(orgId + storageItemSuffix)
+            const timeToCheckAgainst = (1 * 24 * 60 * 60 * 1000);
+
+            let hasSession = false;
+            if (storageItem) {
+                const storageObj = JSON.parse(storageItem);
+                const objectKeys = Object.keys(storageObj);
+                if (objectKeys.length > 0 && storageObj['CONVERSATION_BUTTON_CLICK_TIME'] >= (Date.now() - timeToCheckAgainst)) {
+                    hasSession = true;
+                }
+            }
+
+            return hasSession;
+        }
+
+        function showChatBasedOnTaxonomy() {
+            return false;
+        }
+
+        window.addEventListener("onEmbeddedMessagingReady", e => {
+            embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+                "Start_Location" : window.location.href,
+                "Chat_Origin": "Website"
+            });
+
+            // Launches a chat and can be even used when the button is not visible
+            embeddedservice_bootstrap.utilAPI
+                .launchChat()
+                .then(function (success) {
+
+                })
+                .catch(function (error) {
+                    // Add actions to run after the chat client launch fails.
+                })
+                .finally(function () {
+                    // Add actions to run whether the chat client launches
+                    // successfully or not.
+                });
+        });
+    </script>
+</div>
+
+</body>
+
+</html>
